@@ -1,0 +1,107 @@
+<!-- <div class="card">
+    <form [formGroup] = "userForm">
+      <div class="mt-5">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Nome</label>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" formControlName = "nome" class="form-control">
+                    <input type="text" formControlName = "tel" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-row mt-4">
+            <div class="col-md-67">
+                <button type="button" class="btn bt-primary" (click)="addItem()">Add item</button>
+                <button type="button" class="btn bt-primary" (click)="limpar()">Limpar</button>
+            </div>
+        </div>
+      </div>
+    </form>
+
+    <div mat-table class="col-md-8 mt-4 mb-4"> 
+        <table class="table table-bordered mat-elevation-z8 demo-table">
+            <thead>
+                <tr>
+                    <th>Indice</th>
+                    <th>Nome</th>
+                    <th>Tel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listData">
+                    <td><span>{{item.nome}}</span></td>
+                    <td><span>{{item.tel}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div> -->
+
+<div class="container">
+    <div class="container-form">
+        <form #f="ngForm">
+            <mat-form-field apparence="legacy" class="input-data">
+                <mat-label>Nome</mat-label>
+                <input matInput [(ngModel)]="newUser.userName" type="text" name="newuserName" id="newuserName"
+                    class="form-control" pattern="[a-zA-Z ]*" required>
+            </mat-form-field><br>
+
+            <mat-form-field appearance="legacy" class="input-data">
+                <mat-label>Telefone</mat-label>
+                <span matPrefix>+55 &nbsp;</span>
+                <input type="tel" matInput [(ngModel)]="newUser.age" name="age" id="age" placeholder="(99)91234-1234"
+                    required>
+                <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field><br>
+
+            <button id="bt-add" mat-raised-button class="btn bt-primary" [disabled]="!f.valid"
+                (click)="addUser()">Salvar</button>
+            <button id="bt-limpar" type="button" class="btn bt-primary" (click)="limpar()">Limpar</button>
+        </form>
+    </div>
+
+    <div class="container-table">
+        <mat-form-field appearance="standard">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input>
+        </mat-form-field>
+        <mat-table mat-table #table [dataSource]="myDataArray" #sort matSort="sort"
+            (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
+            <ng-container matColumnDef="cod">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Cod</mat-header-cell>
+                <mat-cell *matCellDef="let user let i = index">
+                    <div> {{i+1}} </div>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="userName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                    <div> {{user.userName}} </div>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="age">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Telefone</mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                    <div> {{user.age}} </div>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Remover">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Remover</mat-header-cell>
+                <mat-cell *matCellDef="let user=index">
+                    <div>
+                        <button type="button" class="btn btn-danger" (click)="onRemove(user)">Remover</button>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+            <mat-row *matRowDef="let dataSource; columns: columnsToDisplay;"></mat-row>
+        </mat-table>
+
+    </div>
+</div>
